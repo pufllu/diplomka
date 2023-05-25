@@ -1,0 +1,98 @@
+﻿<Page x:Class="diplomka.CouriersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:diplomka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CouriersPage">
+    <Page.Resources>
+        <Style x:Key="cellStyle" TargetType="DataGridCell">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="#2AB289" BorderThickness="0">
+                            <Border x:Name="border"
+                              BorderBrush="#2AB289"
+                              BorderThickness="2"
+                              Background="#2AB289"
+                              CornerRadius="5">
+                                <ContentPresenter />
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#2AB289"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="rowStyle" TargetType="DataGridRow">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#2AB289" />
+        </Style>
+        <Style x:Key="ButtonClick" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Button.IsFocused" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                </Trigger>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                </Trigger>
+                
+            </Style.Triggers>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="15" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Поиск курьера:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <TextBox x:Name="SearchCourier" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="200" TextChanged="ChangeSearch"/>
+       
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="3" Margin="10" x:Name="CourierTable" Background="#AAAAAAAA" AutoGenerateColumns="False" Opacity="0.8" RowStyle="{StaticResource rowStyle}" CellStyle="{StaticResource cellStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО" Width="0.6*" Binding="{Binding FIO}"/>
+                <DataGridTextColumn Header="Номер телефона" Width="*" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="Транспортное средство" Width="*" Binding="{Binding VehicleType}"/>
+                <DataGridTextColumn Header="Регистрационный номер" Width="1.5*" Binding="{Binding VehicleRegistrationPlates}"/>
+                <DataGridTextColumn Header="Пароль" Width="0.5*" Binding="{Binding Password}"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Click="DeleteOrder"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        
+        <Frame x:Name="FramePage" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+    </Grid>
+</Page>

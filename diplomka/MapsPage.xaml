@@ -1,0 +1,63 @@
+﻿<Page x:Class="diplomka.MapsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:bmaps="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+      xmlns:local="clr-namespace:diplomka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MapsPage">
+    <Page.Resources>
+        <Style x:Key="ButtonClick" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Button.IsFocused" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                </Trigger>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="66"/>
+            <RowDefinition Height="66"/>
+            <RowDefinition Height="66"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+
+
+        <TextBlock Text="Откуда:" FontStyle="Italic"  />
+        <TextBox x:Name="StartLocationTextBox" Width="230" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20"/>
+
+
+        <TextBlock Text="Куда:" Grid.Row="1" FontStyle="Italic"/>
+        <TextBox x:Name="EndLocationTextBox" Width="230" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Grid.Row="1"/>
+        <ScrollViewer Grid.Row="3" Opacity="0.7" >
+            <TextBox FontStyle="Italic" x:Name="RouteTextBox" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        </ScrollViewer>
+        <Border Grid.Row="2" Width="100" Height="30" CornerRadius="10">
+            <Button Content="Рассчитать" Style="{StaticResource ButtonClick}"  Click="FindPathButton_Click" FontStyle="Italic"/>
+        </Border>
+        <bmaps:Map x:Name="myMap" Mode="AerialWithLabels" AnimationLevel="Full" CredentialsProvider="nC5weHf1x4BT9fCFAazm~n5F4zfLRvJ6tmZVprOGDGg~AlRsnPjorYXQygI_OZ8Rl4Nc2sVX9YXdLcA7N6jNKqyJsG-uAu0lsIrH5eeskyT7" Center="51.8345,107.5845" ZoomLevel="12" Grid.RowSpan="4" Grid.Column="2" />
+    </Grid>
+</Page>

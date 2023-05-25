@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="daecbcc5ea4c4e2788bb6c1d89725919" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="Courier12Model.CourierPositions" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.Couriers" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.Deliveries" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.DeliveryTypes" Width="1.5" PointX="5.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.Orders" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.Users" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Courier12Model.ShippingCost" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="Courier12Model.FK__Couriers__Positi__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="Courier12Model.FK__Deliverie__Couri__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="Courier12Model.FK__Deliverie__Order__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="Courier12Model.FK__ShippingC__Deliv__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="Courier12Model.FK__Orders__UserID__2A4B4B5E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

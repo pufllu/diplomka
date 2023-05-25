@@ -1,0 +1,30 @@
+﻿<Page x:Class="diplomka.CostPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:diplomka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CostPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Вес:" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBox x:Name="WeightTextBox" VerticalAlignment="Bottom" Width="150"/>
+        <!--<Label Content=""/>
+            <TextBox x:Name="DimensionsTextBox" Grid.Row="1" VerticalAlignment="Bottom" Margin="50"/>-->
+        <Label Content="Дистанция:" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"  Grid.Column="1"/>
+            <TextBox x:Name="DistanceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="150" Grid.Column="1"/>
+        <Button x:Name="DecisionBox" Content="Рассчитать" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="1" Click="DecisionBtn"/>
+        <TextBox x:Name="TotalPriceTextBox" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250"/>
+    </Grid>
+</Page>

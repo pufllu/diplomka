@@ -1,0 +1,101 @@
+﻿<Page x:Class="diplomka.DeliveriesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:diplomka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DeliveriesPage">
+
+    <Page.Resources>
+        <Style x:Key="cellStyle" TargetType="DataGridCell">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border Background="#2AB289" BorderThickness="0">
+                            <Border x:Name="border"
+                              BorderBrush="#2AB289"
+                              BorderThickness="2"
+                              Background="#2AB289"
+                              CornerRadius="5">
+                                <ContentPresenter />
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+                                <Setter TargetName="border" Property="Background" Value="#2AB289"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="rowStyle" TargetType="DataGridRow">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#2AB289" />
+        </Style>
+        <Style x:Key="ButtonClick" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Button.IsFocused" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                </Trigger>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                </Trigger>
+
+            </Style.Triggers>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="5.5*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Поиск заказа:" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <TextBox x:Name="SearchOrder" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" TextChanged="ChangeSearch"/>
+
+
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="3" Margin="10" x:Name="TableDelivery" AutoGenerateColumns="False" Background="#AAAAAAAA" RowStyle="{StaticResource rowStyle}" CellStyle="{StaticResource cellStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер доставки" Width="*" Binding="{Binding DeliveryID}"/>
+                <DataGridTextColumn Header="Номер заказа" Width="*" Binding="{Binding OrderID}"/>
+                <DataGridTextColumn Header="Курьер" Width="*" Binding="{Binding CouriersFio}"/>
+                <DataGridTextColumn Header="Дата доставки" Width="*" Binding="{Binding DeliveryDate}"/>
+                <DataGridTextColumn Header="Статус доставки" Width="1.2*" Binding="{Binding DeliveryStatus}"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Редактировать" Click="EditOrder"/>
+                    <MenuItem Header="Удалить" Click="DeleteOrder"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Frame x:Name="FramePage" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+    </Grid>
+</Page>

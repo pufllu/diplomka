@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Courier12Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CourierPositions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PositionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Couriers">
+          <Key>
+            <PropertyRef Name="CourierID" />
+          </Key>
+          <Property Name="CourierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PositionID" Type="int" />
+          <Property Name="CourierStatus" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VehicleType" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehicleRegistrationPlates" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="DeliveryID" />
+          </Key>
+          <Property Name="DeliveryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="CourierID" Type="int" />
+          <Property Name="DeliveryDate" Type="date" Nullable="false" />
+          <Property Name="DeliveryStatus" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryTypes">
+          <Key>
+            <PropertyRef Name="DeliveryTypeID" />
+          </Key>
+          <Property Name="DeliveryTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="OrderDate" Type="date" Nullable="false" />
+          <Property Name="DeliveryAddress" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DeliveryStatus" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Courier12.dbo.ShippingCost" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ShippingCost">
+          <Key>
+            <PropertyRef Name="WeightFrom" />
+            <PropertyRef Name="WeightTo" />
+            <PropertyRef Name="Cost" />
+          </Key>
+          <Property Name="WeightFrom" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="WeightTo" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DeliveryTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Couriers__Positi__2D27B809">
+          <End Role="CourierPositions" Type="Self.CourierPositions" Multiplicity="0..1" />
+          <End Role="Couriers" Type="Self.Couriers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourierPositions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Couriers">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Deliverie__Couri__30F848ED">
+          <End Role="Couriers" Type="Self.Couriers" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Couriers">
+              <PropertyRef Name="CourierID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="CourierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Deliverie__Order__300424B4">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__UserID__2A4B4B5E">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShippingC__Deliv__32E0915F">
+          <End Role="DeliveryTypes" Type="Self.DeliveryTypes" Multiplicity="0..1" />
+          <End Role="ShippingCost" Type="Self.ShippingCost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryTypes">
+              <PropertyRef Name="DeliveryTypeID" />
+            </Principal>
+            <Dependent Role="ShippingCost">
+              <PropertyRef Name="DeliveryTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Courier12ModelContainer">
+          <EntitySet Name="CourierPositions" EntityType="Self.CourierPositions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Couriers" EntityType="Self.Couriers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deliveries" EntityType="Self.Deliveries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryTypes" EntityType="Self.DeliveryTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShippingCost" EntityType="Self.ShippingCost" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ShippingCost].[WeightFrom] AS [WeightFrom], 
+    [ShippingCost].[WeightTo] AS [WeightTo], 
+    [ShippingCost].[Cost] AS [Cost], 
+    [ShippingCost].[DeliveryTypeID] AS [DeliveryTypeID]
+    FROM [dbo].[ShippingCost] AS [ShippingCost]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Couriers__Positi__2D27B809" Association="Self.FK__Couriers__Positi__2D27B809">
+            <End Role="CourierPositions" EntitySet="CourierPositions" />
+            <End Role="Couriers" EntitySet="Couriers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Deliverie__Couri__30F848ED" Association="Self.FK__Deliverie__Couri__30F848ED">
+            <End Role="Couriers" EntitySet="Couriers" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Deliverie__Order__300424B4" Association="Self.FK__Deliverie__Order__300424B4">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__UserID__2A4B4B5E" Association="Self.FK__Orders__UserID__2A4B4B5E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShippingC__Deliv__32E0915F" Association="Self.FK__ShippingC__Deliv__32E0915F">
+            <End Role="DeliveryTypes" EntitySet="DeliveryTypes" />
+            <End Role="ShippingCost" EntitySet="ShippingCost" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Courier12Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CourierPositions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PositionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Couriers" Relationship="Self.FK__Couriers__Positi__2D27B809" FromRole="CourierPositions" ToRole="Couriers" />
+        </EntityType>
+        <EntityType Name="Couriers">
+          <Key>
+            <PropertyRef Name="CourierID" />
+          </Key>
+          <Property Name="CourierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PositionID" Type="Int32" />
+          <Property Name="CourierStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VehicleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleRegistrationPlates" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CourierPositions" Relationship="Self.FK__Couriers__Positi__2D27B809" FromRole="Couriers" ToRole="CourierPositions" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK__Deliverie__Couri__30F848ED" FromRole="Couriers" ToRole="Deliveries" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="DeliveryID" />
+          </Key>
+          <Property Name="DeliveryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="CourierID" Type="Int32" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeliveryStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Couriers" Relationship="Self.FK__Deliverie__Couri__30F848ED" FromRole="Deliveries" ToRole="Couriers" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Deliverie__Order__300424B4" FromRole="Deliveries" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="DeliveryTypes">
+          <Key>
+            <PropertyRef Name="DeliveryTypeID" />
+          </Key>
+          <Property Name="DeliveryTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ShippingCost" Relationship="Self.FK__ShippingC__Deliv__32E0915F" FromRole="DeliveryTypes" ToRole="ShippingCost" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK__Deliverie__Order__300424B4" FromRole="Orders" ToRole="Deliveries" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Orders__UserID__2A4B4B5E" FromRole="Orders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UserID__2A4B4B5E" FromRole="Users" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="ShippingCost">
+          <Key>
+            <PropertyRef Name="WeightFrom" />
+            <PropertyRef Name="WeightTo" />
+            <PropertyRef Name="Cost" />
+          </Key>
+          <Property Name="WeightFrom" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="WeightTo" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DeliveryTypeID" Type="Int32" />
+          <NavigationProperty Name="DeliveryTypes" Relationship="Self.FK__ShippingC__Deliv__32E0915F" FromRole="ShippingCost" ToRole="DeliveryTypes" />
+        </EntityType>
+        <Association Name="FK__Couriers__Positi__2D27B809">
+          <End Role="CourierPositions" Type="Self.CourierPositions" Multiplicity="0..1" />
+          <End Role="Couriers" Type="Self.Couriers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourierPositions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Couriers">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Deliverie__Couri__30F848ED">
+          <End Role="Couriers" Type="Self.Couriers" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Couriers">
+              <PropertyRef Name="CourierID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="CourierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Deliverie__Order__300424B4">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ShippingC__Deliv__32E0915F">
+          <End Role="DeliveryTypes" Type="Self.DeliveryTypes" Multiplicity="0..1" />
+          <End Role="ShippingCost" Type="Self.ShippingCost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryTypes">
+              <PropertyRef Name="DeliveryTypeID" />
+            </Principal>
+            <Dependent Role="ShippingCost">
+              <PropertyRef Name="DeliveryTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__UserID__2A4B4B5E">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Courier12Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CourierPositions" EntityType="Self.CourierPositions" />
+          <EntitySet Name="Couriers" EntityType="Self.Couriers" />
+          <EntitySet Name="Deliveries" EntityType="Self.Deliveries" />
+          <EntitySet Name="DeliveryTypes" EntityType="Self.DeliveryTypes" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="ShippingCost" EntityType="Self.ShippingCost" />
+          <AssociationSet Name="FK__Couriers__Positi__2D27B809" Association="Self.FK__Couriers__Positi__2D27B809">
+            <End Role="CourierPositions" EntitySet="CourierPositions" />
+            <End Role="Couriers" EntitySet="Couriers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Deliverie__Couri__30F848ED" Association="Self.FK__Deliverie__Couri__30F848ED">
+            <End Role="Couriers" EntitySet="Couriers" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Deliverie__Order__300424B4" Association="Self.FK__Deliverie__Order__300424B4">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ShippingC__Deliv__32E0915F" Association="Self.FK__ShippingC__Deliv__32E0915F">
+            <End Role="DeliveryTypes" EntitySet="DeliveryTypes" />
+            <End Role="ShippingCost" EntitySet="ShippingCost" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__UserID__2A4B4B5E" Association="Self.FK__Orders__UserID__2A4B4B5E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Courier12ModelContainer" CdmEntityContainer="Courier12Entities">
+          <EntitySetMapping Name="CourierPositions">
+            <EntityTypeMapping TypeName="Courier12Model.CourierPositions">
+              <MappingFragment StoreEntitySet="CourierPositions">
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Couriers">
+            <EntityTypeMapping TypeName="Courier12Model.Couriers">
+              <MappingFragment StoreEntitySet="Couriers">
+                <ScalarProperty Name="CourierID" ColumnName="CourierID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="CourierStatus" ColumnName="CourierStatus" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+                <ScalarProperty Name="VehicleRegistrationPlates" ColumnName="VehicleRegistrationPlates" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="Courier12Model.Deliveries">
+              <MappingFragment StoreEntitySet="Deliveries">
+                <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CourierID" ColumnName="CourierID" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryTypes">
+            <EntityTypeMapping TypeName="Courier12Model.DeliveryTypes">
+              <MappingFragment StoreEntitySet="DeliveryTypes">
+                <ScalarProperty Name="DeliveryTypeID" ColumnName="DeliveryTypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Courier12Model.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Courier12Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Courier12Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="UserPhoneNumber" ColumnName="UserPhoneNumber" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShippingCost">
+            <EntityTypeMapping TypeName="Courier12Model.ShippingCost">
+              <MappingFragment StoreEntitySet="ShippingCost">
+                <ScalarProperty Name="WeightFrom" ColumnName="WeightFrom" />
+                <ScalarProperty Name="WeightTo" ColumnName="WeightTo" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DeliveryTypeID" ColumnName="DeliveryTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

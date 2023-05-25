@@ -1,0 +1,67 @@
+﻿<Page x:Class="diplomka.EditOrder"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:diplomka"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EditOrder">
+    <Page.Resources>
+        <Style x:Key="ButtonClick" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Button.IsFocused" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                </Trigger>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Foreground" Value="#2AB289" />
+                    <Setter Property="Button.FontWeight" Value="Bold" />
+                </Trigger>
+                <!--<Trigger Property="Button.IsPressed" Value="False">
+<Setter Property="Button.Foreground" Value="#8b00ff" />
+</Trigger>-->
+            </Style.Triggers>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Setter Property="Foreground" Value="#29B15A"/>-->
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Имя получателя:" Grid.Row="1"/>
+        <TextBox x:Name="NameUser" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="15"/>
+        <Label Content="Адрес доставки:" Grid.Row="2"/>
+        <TextBox x:Name="DeliveryAddress" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="15"/>
+        <Label Content="Дата заказа:" Grid.Row="4"/>
+        <DatePicker x:Name="DateOrder" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="15"/>
+        <Label Content="Статус заказа:" Grid.Row="3"/>
+        <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="15" x:Name="StateOrder"/>
+        <Border  Grid.ColumnSpan="2" Width="200" VerticalAlignment="Center" Height="20">
+            <Button Content="Сохранить" x:Name="SaveEdit" Style="{StaticResource ButtonClick}" Click="SaveOrder"/>
+        </Border>
+        <Border Grid.ColumnSpan="2" Width="70" HorizontalAlignment="Left" Height="20">
+            <Button Content="Назад" x:Name="BtnBack" Style="{StaticResource ButtonClick}" Click="BackButton"/>
+        </Border>
+    </Grid>
+</Page>
